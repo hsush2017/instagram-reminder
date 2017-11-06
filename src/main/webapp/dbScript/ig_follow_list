@@ -1,5 +1,0 @@
-CREATE TABLE IG_FOLLOW_LIST
-(serial_id serial primary key,
-user_id varchar(50) NOT NULL, 
-ig_id varchar (30) NOT NULL
-);
