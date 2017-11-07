@@ -14,7 +14,7 @@ To make it work, you have to do some work:
   You should get linebot''s channel access token and channel secret. 
   And you have to set Webhook URL in bot's setting page, so that all requests will redirect to your server. 
 
-3. Modify /instagram-reminder-example/src/main/resources/application.yml
+3. Modify [application.properties](./src/main/resources/application.yml)
   Copy linebot's access token and secret on it.
 
 4. Modify /instagram-reminder-example/src/main/resources/application.properties
