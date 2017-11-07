@@ -5,10 +5,10 @@ An linebot that will post new media when your interested Instagram user has new 
 This is a JAVA based linebot server handling user commands.
 To make it work, you have to do some work:
 
-1. Create a database & import tables:</br>
-  These tables record user id and Instagram users' latest media code.</br>
-  Import them to your own database.  (table script are in [dbScript folder](./src/main/webapp/dbScript)</br>
-</br>
+1. Create a database & import tables:  
+   These tables record user id and Instagram users' latest media code.</br>
+   Import them to your own database.  (table script are in [dbScript folder](./src/main/webapp/dbScript)</br>
+    </br>
 2. Create a linebot & enable webhook: </br>
   You can find these process [here](https://developers.line.me/en/docs/messaging-api/building-bot/), there are many tutorials can help you.</br>
   You should get linebot's channel access token and channel secret.</br>
