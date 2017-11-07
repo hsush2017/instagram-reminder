@@ -65,6 +65,10 @@ public class LineController {
 					return new TextMessage(sb.toString());
 				
 				case "follow":
+					if(this.service.getFollow(id).size() >= 10) {
+						return new TextMessage("You've reach max follow size: 10");
+					}
+						
 					// check if ig user exist
 					if (!IGUtils.exist(strArr[2])) {
 						return new TextMessage("[" + strArr[2] + "] dosen't exist!");
