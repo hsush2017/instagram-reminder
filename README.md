@@ -10,7 +10,7 @@ These tables record user id and Instagram users' latest media code. Import them 
 </br>
 2. Create a linebot & enable webhook:</br>
 You can find these process [here](https://developers.line.me/en/docs/messaging-api/building-bot/), there are many tutorials can help you. 
-You should get linebot's channel access token and channel secret. And you have to set Webhook URL in bot's setting page, so that all requests will redirect to your server. 
+You should get linebot's channel access token and channel secret. And you have to set Webhook URL in bot's setting page, so that all requests will redirect to your server. </br>
 </br>
 3. Modify [application.yml](./src/main/resources/application.yml)</br>
 Copy linebot's access token and secret on it.</br>
