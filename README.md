@@ -7,7 +7,7 @@ To make it work, you have to do some work:
 
 1. Create a database & import tables:
   These tables record user id and Instagram users' latest media code.
-  Import them to your own database.  (table script are in /instagram-reminder-example/src/main/webapp/dbScript)
+  Import them to your own database.  (table script are in [dbScript folder](./src/main/webapp/dbScript)
 
 2. Create a linebot & enable webhook: 
   You can find these process by google it, there are many tutorials can help you.
@@ -17,7 +17,7 @@ To make it work, you have to do some work:
 3. Modify [application.properties](./src/main/resources/application.yml)
   Copy linebot's access token and secret on it.
 
-4. Modify /instagram-reminder-example/src/main/resources/application.properties
+4. Modify [application.properties](./src/main/resources/application.properties)
   Copy your database setting on it, including driver, url, username, and password
   
 5. Deploy project to server
