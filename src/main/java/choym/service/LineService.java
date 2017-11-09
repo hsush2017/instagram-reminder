@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import choym.model.Follow;
 import choym.model.LineUser;
 
 @Service("LineService")
@@ -21,8 +22,8 @@ public class LineService {
 	 * @param id user id
 	 * @return
 	 */
-	public List<Map<String, Object>> getFollow(String id) {
-		return this.jdbcTemplate.queryForList("SELECT * FROM follow WHERE line_id = ? ORDER BY serial_id", new Object[] { id });
+	public List<Follow> getFollow(String id) {
+		return this.jdbcTemplate.query("SELECT * FROM follow WHERE line_id = ? ORDER BY serial_id", new Object[]{id}, new BeanPropertyRowMapper<Follow>(Follow.class));
 	}
 	
 	/**
@@ -33,29 +34,29 @@ public class LineService {
 	 * @return
 	 */
 	@Transactional
-	public int addFollow(String line_id, String ig_id, String mediaCode) {
-		return this.jdbcTemplate.update("INSERT INTO follow(line_id, ig_id, media_code) VALUES(?, ?, ?)", new Object[]{line_id, ig_id, mediaCode});
+	public int addFollow(String line_id, String ig_id, String ig_username, String mediaCode) {
+		return this.jdbcTemplate.update("INSERT INTO follow(line_id, ig_id, ig_username, media_code) VALUES(?, ?, ?, ?)", new Object[]{line_id, ig_id, ig_username, mediaCode});
 	}
 
 	/**
 	 * user unfollow someone's IG
 	 * @param line_id line id
-	 * @param ig_id IG id
+	 * @param ig_username IG id
 	 * @return
 	 */
 	@Transactional
-	public int deleteFollow(String line_id, String ig_id) {
-		return this.jdbcTemplate.update("DELETE FROM follow WHERE line_id = ? AND ig_id = ?", new Object[]{line_id, ig_id});
+	public int deleteFollow(String line_id, String ig_username) {
+		return this.jdbcTemplate.update("DELETE FROM follow WHERE line_id = ? AND ig_username = ?", new Object[]{line_id, ig_username});
 	}
 
 	/**
 	 * check if user has followed IG user
 	 * @param line_id line id
-	 * @param ig_id ig id
+	 * @param ig_username ig id
 	 * @return
 	 */
-	public boolean hasFollowed(String line_id, String ig_id) {
-		List<Map<String, Object>> list = this.jdbcTemplate.queryForList("SELECT * FROM follow where line_id = ? and ig_id = ?", new Object[] { line_id, ig_id });
+	public boolean hasFollowed(String line_id, String ig_username) {
+		List<Map<String, Object>> list = this.jdbcTemplate.queryForList("SELECT * FROM follow where line_id = ? and ig_username = ?", new Object[] { line_id, ig_username });
 		return !list.isEmpty();
 	}
 	

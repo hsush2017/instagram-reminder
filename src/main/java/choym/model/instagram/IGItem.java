@@ -15,19 +15,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class IGItem {
 	private String id;
-	private String code;
+	// private String code;
 	private IGUser user;
 	private IGImages images;
 	private String createdTime;
 	private IGCaption caption;
 	private boolean userHasLiked;
 	// private IGLikes likes;
+	private List<String> tags;
+	private String filter;
 	// private Comments comments;
-	private boolean canViewComments;
-	private boolean canDeleteComments;
 	private String type;
 	private String link;
 	// private Location location;
+	// private String attribution;
+	// private List<IGUser> usersInPhoto;
 	private IGVideos videos;
 	private List<IGCarouselMedia> carouselMedia;
 
@@ -38,15 +40,6 @@ public class IGItem {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	@JsonProperty("code")
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
 	}
 
 	@JsonProperty("user")
@@ -94,22 +87,22 @@ public class IGItem {
 		this.userHasLiked = userHasLiked;
 	}
 
-	@JsonProperty("can_view_comments")
-	public boolean canViewComments() {
-		return canViewComments;
+	@JsonProperty("tags")
+	public List<String> getTags() {
+		return tags;
 	}
 
-	public void setCanViewComments(boolean canViewComments) {
-		this.canViewComments = canViewComments;
+	public void setTags(List<String> tags) {
+		this.tags = tags;
 	}
 
-	@JsonProperty("can_delete_comments")
-	public boolean canDeleteComments() {
-		return canDeleteComments;
+	@JsonProperty("filter")
+	public String getFilter() {
+		return filter;
 	}
 
-	public void setCanDeleteComments(boolean canDeleteComments) {
-		this.canDeleteComments = canDeleteComments;
+	public void setFilter(String filter) {
+		this.filter = filter;
 	}
 
 	@JsonProperty("type")
@@ -146,6 +139,11 @@ public class IGItem {
 
 	public void setCarouselMedia(List<IGCarouselMedia> carouselMedia) {
 		this.carouselMedia = carouselMedia;
+	}
+	
+	public String getMediaCode() {
+		String[] s = this.link.split("/");
+		return s[s.length-1];
 	}
 
 }

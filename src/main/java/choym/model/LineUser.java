@@ -19,5 +19,4 @@ public class LineUser {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
 }

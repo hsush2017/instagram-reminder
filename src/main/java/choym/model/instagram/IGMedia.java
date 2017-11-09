@@ -14,11 +14,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class IGMedia {
+	private Pagination pagination;
 	private List<IGItem> items;
-	private boolean moreAvailable;
-	private String status;
+	private Meta meta;
 
-	@JsonProperty("items")
+	@JsonProperty("pagination")
+	public Pagination getPagination() {
+		return pagination;
+	}
+
+	public void setPagination(Pagination pagination) {
+		this.pagination = pagination;
+	}
+
+	@JsonProperty("data")
 	public List<IGItem> getItems() {
 		return items;
 	}
@@ -27,22 +36,13 @@ public class IGMedia {
 		this.items = items;
 	}
 
-	@JsonProperty("more_available")
-	public boolean isMoreAvailable() {
-		return moreAvailable;
+	@JsonProperty("meta")
+	public Meta getMeta() {
+		return meta;
 	}
 
-	public void setMoreAvailable(boolean moreAvailable) {
-		this.moreAvailable = moreAvailable;
-	}
-
-	@JsonProperty("status")
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
+	public void setMeta(Meta meta) {
+		this.meta = meta;
 	}
 
 }

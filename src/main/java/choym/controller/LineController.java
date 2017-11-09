@@ -1,9 +1,12 @@
 package choym.controller;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +25,7 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
+import choym.model.Follow;
 import choym.model.LineUser;
 import choym.model.instagram.IGMedia;
 import choym.service.LineService;
@@ -33,6 +37,9 @@ public class LineController {
 
 	@Value("${line.help.text}")
 	private String lineHelpText;
+	
+	@Value("${instagram.accesstoken}")
+	private String instagramAccessToken;
 
 	@Autowired
 	private LineService service;
@@ -57,10 +64,10 @@ public class LineController {
 				// list all followed IG user
 				switch(strArr[1].toLowerCase()) {
 				case "list":
-					List<Map<String, Object>> list = this.service.getFollow(id);
+					List<Follow> list = this.service.getFollow(id);
 					StringBuilder sb = new StringBuilder("Follow IG Users: " + list.size());
 					for (int i = 0; i < list.size(); i++) {
-						sb.append("\n " + (i + 1) + ". https://www.instagram.com/" + list.get(i).get("ig_id"));
+						sb.append("\n " + (i + 1) + ". https://www.instagram.com/" + list.get(i).getIgUsername());
 					}
 					return new TextMessage(sb.toString());
 				
@@ -68,15 +75,19 @@ public class LineController {
 					if(this.service.getFollow(id).size() >= 10) {
 						return new TextMessage("You've reach max follow size: 10");
 					}
-						
+
 					// check if ig user exist
-					if (!IGUtils.exist(strArr[2])) {
+					HttpClient client = HttpClientBuilder.create().build();
+					HttpGet request = new HttpGet("https://www.instagram.com/" + strArr[2]);
+					HttpResponse response = client.execute(request);
+					if (response.getStatusLine().getStatusCode() != 200) {
 						return new TextMessage("[" + strArr[2] + "] dosen't exist!");
 					}
 
 					// check if ig is private
-					IGMedia media = IGUtils.getMedia(strArr[2]);
-					if (!media.isMoreAvailable()) {
+					String ig_id = IGUtils.getIGId(strArr[2], this.instagramAccessToken);
+					IGMedia media = IGUtils.getMedia(ig_id, this.instagramAccessToken);
+					if ("APINotAllowedError".equals(media.getMeta().getErrorType())) {
 						return new TextMessage("[" + strArr[2] + "] is not public!");
 					}
 
@@ -85,8 +96,7 @@ public class LineController {
 						return new TextMessage("You have already followed [" + strArr[2] + "]!");
 					}
 
-					String mediaCode = media.getItems().get(0).getCode();
-					int code = this.service.addFollow(id, strArr[2], mediaCode);
+					int code = this.service.addFollow(id, ig_id, strArr[2], media.getItems().get(0).getMediaCode());
 					return new TextMessage("Follow [" + strArr[2] + (code == 1 ? "] success!" : "] fail!"));
 				
 				case "unfollow":

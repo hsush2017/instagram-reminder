@@ -7,6 +7,7 @@ public class Follow {
 	private String lineId;
 	private String igId;
 	private String mediaCode;
+	private String igUsername;
 
 	public BigDecimal getSerialId() {
 		return serialId;
@@ -42,5 +43,13 @@ public class Follow {
 
 	public void setIgId(String igId) {
 		this.igId = igId;
+	}
+
+	public String getIgUsername() {
+		return igUsername;
+	}
+
+	public void setIgUsername(String igUsername) {
+		this.igUsername = igUsername;
 	}
 }
