@@ -13,9 +13,7 @@ You should get linebot's channel access token and channel secret. And you have t
 3. Get instagram access token & copy token on [application.properties](./src/main/resources/application.properties)  
 In order to retrieve Instagram data. you'll need to apply for an Instagram access token. 
 Follow this [tutorial](https://www.instagram.com/developer/authentication/) step by setp to get one.
-And be sure that token has the "public_content" permission, check [this](https://www.instagram.com/developer/authorization/).  
-  
-Once you get token, copy it on application.properties.
+And be sure that token has the "public_content" permission, check [this](https://www.instagram.com/developer/authorization/).Once you get token, copy it on application.properties.
   
 3. Modify [application.yml](./src/main/resources/application.yml)  
 Copy linebot's access token and secret on it.  
